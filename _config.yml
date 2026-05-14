@@ -1,0 +1,14 @@
+title: GymCheck — 정책 안내
+description: GymCheck 앱의 개인정보처리방침과 이용약관
+theme: jekyll-theme-minimal
+markdown: kramdown
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
