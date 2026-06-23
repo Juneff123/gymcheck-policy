@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GymCheck 친구 초대</title>
+<!-- 리치 프리뷰 (iMessage·카카오 등에서 카드로 표시) -->
+<meta property="og:title" content="💪 GymCheck 운동 친구 초대">
+<meta property="og:description" content="친구가 GymCheck에서 당신을 운동 친구로 초대했어요! 열어서 서로의 운동 기록을 확인해보세요.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://juneff123.github.io/gymcheck-policy/invite/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;background:linear-gradient(160deg,#0e1726,#1a2740);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{background:rgba(255,255,255,.06);border-radius:24px;padding:36px 28px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  .logo{font-size:44px;margin-bottom:6px}
+  h1{font-size:22px;font-weight:800;margin-bottom:10px}
+  p{color:#b9c4d6;font-size:14px;line-height:1.55;margin-bottom:24px}
+  .code-label{font-size:12px;color:#8a97ad;margin-bottom:6px}
+  .code{font-size:34px;font-weight:900;letter-spacing:6px;color:#7c9cff;font-family:'SF Mono',ui-monospace,monospace;margin-bottom:6px}
+  .copied{font-size:12px;color:#5ec27e;height:16px;margin-bottom:18px}
+  .btn{display:block;width:100%;padding:15px;border-radius:14px;font-size:16px;font-weight:700;border:none;cursor:pointer;text-decoration:none;margin-bottom:10px}
+  .btn-primary{background:#7c9cff;color:#0e1726}
+  .btn-store{background:rgba(255,255,255,.1);color:#fff}
+  .hint{font-size:12px;color:#8a97ad;margin-top:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">💪</div>
+  <h1>GymCheck 운동 친구 초대</h1>
+  <p>친구가 당신을 GymCheck 운동 친구로 초대했어요!<br>서로의 운동 기록을 캘린더로 확인해보세요.</p>
+  <div class="code-label">친구 코드</div>
+  <div class="code" id="code">------</div>
+  <div class="copied" id="copied"></div>
+  <button class="btn btn-primary" id="openApp">앱에서 바로 친구 추가</button>
+  <a class="btn btn-store" id="appstore" href="https://apps.apple.com/app/id6776245568">App Store에서 받기</a>
+  <a class="btn btn-store" id="playstore" href="https://play.google.com/store/apps/details?id=com.junelee.gymcheck">Google Play에서 받기</a>
+  <div class="hint" id="hint">앱이 있으면 위 버튼으로 바로 추가돼요.<br>앱이 없으면 설치 후 코드를 붙여넣으세요(자동 복사됨).</div>
+</div>
+<script>
+  var code=(new URLSearchParams(location.search).get('code')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);
+  document.getElementById('code').textContent=code||'------';
+  // 코드 자동 복사 (설치 후 붙여넣기용 차선책)
+  if(code&&navigator.clipboard){navigator.clipboard.writeText(code).then(function(){document.getElementById('copied').textContent='코드가 복사되었어요';}).catch(function(){});}
+  // 앱 열기 (커스텀 스킴) — 설치돼 있으면 앱이 열려 친구 추가
+  function openApp(){if(code){window.location.href='gymcheck://friend?code='+encodeURIComponent(code);}}
+  document.getElementById('openApp').onclick=openApp;
+  // 플랫폼별 스토어 버튼 정리
+  var ua=navigator.userAgent;
+  if(/android/i.test(ua)){document.getElementById('appstore').style.display='none';}
+  else if(/iphone|ipad|ipod/i.test(ua)){document.getElementById('playstore').style.display='none';}
+  // 진입 시 앱 자동 열기 시도 (설치돼 있으면 바로 앱으로)
+  if(code){setTimeout(openApp,500);}
+</script>
+</body>
+</html>
